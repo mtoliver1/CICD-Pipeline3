@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/mtoliver1/CICD-Pipeline.git'
+                git 'https://github.com/mtoliver1/CICD-Pipeline3.git'
             }
         }
 
