@@ -16,7 +16,7 @@ pipeline {
         stage('Build (Java 17)') {
             steps {
                 script {
-                    docker.image('maven:3.9.6-eclipse-temurin-17').inside('--network cicd-network') {
+                    docker.image('maven:3.9.6-eclipse-temurin-17').inside('--network cicd-network3') {
                         sh 'mvn clean package'
                     }
                 }
@@ -26,7 +26,7 @@ pipeline {
         stage('Test (Java 11)') {
             steps {
                 script {
-                    docker.image('maven:3.9.6-eclipse-temurin-11').inside('--network cicd-network') {
+                    docker.image('maven:3.9.6-eclipse-temurin-11').inside('--network cicd-network3') {
                         sh 'mvn test'
                     }
                 }
@@ -36,7 +36,7 @@ pipeline {
         stage('Static Code Analysis (Java 21)') {
             steps {
                 script {
-                    withDockerContainer(image: 'maven:3.9.6-eclipse-temurin-21', args: '--network cicd-network') {
+                    withDockerContainer(image: 'maven:3.9.6-eclipse-temurin-21', args: '--network cicd-network3') {
                         withSonarQubeEnv('local-sonarqube') {
                             withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
                                 sh 'mvn sonar:sonar -Dsonar.login=$SONAR_TOKEN'
